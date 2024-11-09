@@ -1,5 +1,9 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
-
 
 public class Sign_Up_Frame extends javax.swing.JFrame {
 
@@ -7,6 +11,16 @@ public class Sign_Up_Frame extends javax.swing.JFrame {
     public Sign_Up_Frame() {
         initComponents();
         
+        String url = "jdbc:mysql://localhost:3306/gulong_rentals";
+        String username = "root"; // Default XAMPP MySQL username
+        String password = ""; // Default password is empty
+
+        try {
+            Connection connection = DriverManager.getConnection(url, username, password);
+            System.out.println("Connected to MySQL database!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
        
         Return_Login_Button.setContentAreaFilled(false);  // Makes the button background transparent
         Return_Login_Button.setOpaque(false);             // Ensures the transparency is respected
@@ -171,7 +185,7 @@ public class Sign_Up_Frame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void UsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_UsernameActionPerformed
 
     private void Return_Login_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Return_Login_ButtonActionPerformed
@@ -190,26 +204,150 @@ public class Sign_Up_Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_Password1ActionPerformed
 
     private void ShowPass1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowPass1ActionPerformed
-        // TODO add your handling code here:
+        if (ShowPass1.isSelected()) {
+            Password1.setEchoChar((char)0);  // Show password in plain text
+        } else {
+            Password1.setEchoChar('*');  // Hide password (default echo character)
+        }  
     }//GEN-LAST:event_ShowPass1ActionPerformed
 
     private void ShowPass2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowPass2ActionPerformed
-        // TODO add your handling code here:
+        if (ShowPass2.isSelected()) {
+            Password2.setEchoChar((char)0);  // Show password in plain text
+        } else {
+            Password2.setEchoChar('*');  // Hide password (default echo character)
+        }  
     }//GEN-LAST:event_ShowPass2ActionPerformed
 
     private void Create_Account_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Create_Account_ButtonActionPerformed
-         if(Username.getText().equals("")) {
+                                                    
+    // Validate input fields
+        if (Username.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please fill out username");
-            } 
-         if(Email_Address.getText().equals("")) {
+            return;  // Exit if username is empty
+        }
+        
+        if (Email_Address.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please fill out email");
-            }
-         else if(Password1.getText().equals("") || Password2.getText().equals("")) {
+            return;  // Exit if email is empty
+        }
+        
+        if (Password1.getText().equals("") || Password2.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Please fill out both passwords");
-            }
-         else if(!Password1.getText().equals(Password2.getText())) {
+            return;  // Exit if passwords are empty
+        }
+        
+        if (!Password1.getText().equals(Password2.getText())) {
             JOptionPane.showMessageDialog(null, "Passwords do not match");
+            return;  // Exit if passwords do not match
+        }
+        
+    // Get user input
+        String username = Username.getText();
+        String password = Password1.getText();  // Assuming Password1 is a JPasswordField
+        String email = Email_Address.getText();  // Assuming Email_Address is a JTextField
+        
+     // Validate if the username or email already exists
+        if (isUsernameTaken(username)) {
+            JOptionPane.showMessageDialog(null, "Username is already taken, please choose another one.");
+            return;  // Exit if username is taken
+        }
+        
+        if (isEmailTaken(email)) {
+            JOptionPane.showMessageDialog(null, "Email is already registered, please choose another one.");
+            return;  // Exit if email is taken
+        }
+        
+        // Create a connection to the database and insert the new user
+            String url = "jdbc:mysql://localhost:3306/gulong_rentals";
+        String dbUsername = "root"; // Default XAMPP MySQL username
+        String dbPassword = ""; // Default password is empty
+        
+        String query = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        
+        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            
+            // Set the parameters for the SQL query
+            stmt.setString(1, username);
+            stmt.setString(2, email);
+            stmt.setString(3, password); // In a real-world application, consider hashing the password
+            
+            // Execute the query to insert the new user
+            int rowsAffected = stmt.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Account created successfully!");
+            // Proceed to the next screen or login page
+                dispose();  // Close the current window
+                new Login_Frame().setVisible(true);  // Open login frame for the user to log in
+            } 
+            
+            else {
+                JOptionPane.showMessageDialog(null, "Error creating account. Please try again.");
             }
+            
+        }
+        
+        catch (SQLException e) {
+        // Handle SQL exceptions
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage());
+        }
+    }
+
+// Method to check if the username is already taken
+    private boolean isUsernameTaken(String username) {
+        String url = "jdbc:mysql://localhost:3306/gulong_rentals";
+        String dbUsername = "root"; // Default XAMPP MySQL username
+        String dbPassword = ""; // Default password is empty
+
+        String query = "SELECT * FROM users WHERE username = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+            PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setString(1, username);  // Set the username parameter
+            ResultSet rs = stmt.executeQuery();  // Execute the query
+
+            // If the username exists, return true (taken)
+            return rs.next();  // If a result is returned, the username is taken
+
+        } 
+        
+        catch (SQLException e) {
+        // Handle SQL exceptions
+            e.printStackTrace();
+        }
+
+        return false;  // Username is not taken
+    }
+
+// Method to check if the email is already taken
+private boolean isEmailTaken(String email) {
+    String url = "jdbc:mysql://localhost:3306/gulong_rentals";
+    String dbUsername = "root"; // Default XAMPP MySQL username
+    String dbPassword = ""; // Default password is empty
+
+    String query = "SELECT * FROM users WHERE email = ?";
+
+    try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+         PreparedStatement stmt = connection.prepareStatement(query)) {
+
+        stmt.setString(1, email);  // Set the email parameter
+        ResultSet rs = stmt.executeQuery();  // Execute the query
+
+        // If the email exists, return true (taken)
+        return rs.next();  // If a result is returned, the email is taken
+
+    } catch (SQLException e) {
+        // Handle SQL exceptions
+        e.printStackTrace();
+    }
+
+    return false;  // Email is not taken
+
+
           
     }//GEN-LAST:event_Create_Account_ButtonActionPerformed
 

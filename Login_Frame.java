@@ -1,5 +1,10 @@
-import javax.swing.JOptionPane;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class Login_Frame extends javax.swing.JFrame {
 
@@ -8,6 +13,18 @@ public class Login_Frame extends javax.swing.JFrame {
      */
     public Login_Frame() {
         initComponents();
+        
+        String url = "jdbc:mysql://localhost:3306/vehicles";
+        String username = "root"; // Default XAMPP MySQL username
+        String password = ""; // Default password is empty
+
+        try {
+            Connection connection = DriverManager.getConnection(url, username, password);
+            System.out.println("Connected to MySQL database!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
         
         Close_button.setContentAreaFilled(false);  // Makes the button background transparent
         Close_button.setOpaque(false);             // Ensures the transparency is respected
@@ -194,13 +211,56 @@ public class Login_Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_Sign_upActionPerformed
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-        if(UsernameText.getText().equals("")){
-           JOptionPane.showMessageDialog(null, "Please fill out username");
-       }
-        
-        else if(PasswordText.getText().equals("")){
-           JOptionPane.showMessageDialog(null, "Please fill out password");
-       }
+        String username = UsernameText.getText();  // Assuming Username is a JTextField
+        String password = new String(PasswordText.getPassword());  // Assuming Password is a JPasswordField
+
+    // Validate input
+        if (username.equals("") || password.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please fill out both username and password");
+            return;  // Exit if username or password is empty
+        }
+
+        // Attempt to log the user in
+        if (authenticateUser(username, password)) {
+            JOptionPane.showMessageDialog(null, "Login successful!");
+        // Proceed to the next screen or main menu
+            dispose();  // Close the login window
+            new Main_Menu_Frame().setVisible(true);  // Open main menu or dashboard
+        }   
+        else {
+            JOptionPane.showMessageDialog(null, "Invalid username or password.");
+        }
+    }
+
+// Method to authenticate user by checking credentials in the database
+    private boolean authenticateUser(String username, String password) {
+        String url = "jdbc:mysql://localhost:3306/gulong_rentals";
+        String dbUsername = "root"; // Default XAMPP MySQL username
+        String dbPassword = ""; // Default password is empty
+
+    // SQL query to check if the username and password match
+        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+           PreparedStatement stmt = connection.prepareStatement(query)) {
+
+        // Set the parameters for the SQL query
+            stmt.setString(1, username);
+            stmt.setString(2, password);  // In a real-world application, consider hashing the password
+
+        // Execute the query
+            ResultSet rs = stmt.executeQuery();
+
+        // If a record is returned, the username and password are correct
+            return rs.next();  // If a result is found, return true (authenticated)
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage());
+        }
+
+        return false;  // Return false if no matching record was found
     }//GEN-LAST:event_LoginActionPerformed
 
     private void Close_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Close_buttonActionPerformed
