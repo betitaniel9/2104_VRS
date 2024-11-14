@@ -1,14 +1,34 @@
 import javax.swing.*;
 import java.awt.*;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+
 public class Main_Menu_Frame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Main_Menu_Frame
-     */
+    public static Main_Menu_Frame instance;
+    public JLabel A_N; 
+ 
     public Main_Menu_Frame() {
         initComponents();
         
+        instance = this;
+        A_N = Account_Name;
+        
+        String url = "jdbc:mysql://localhost:3306/gulong_rentals";
+        String username = "root"; // Default XAMPP MySQL username
+        String password = ""; // Default password is empty
+
+        try {
+            Connection connection = DriverManager.getConnection(url, username, password);
+            System.out.println("Connected to MySQL database!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        String query = "SELECT * FROM users WHERE username = ?";
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         
         jTabbedPane2.setEnabledAt(0, false);  // Disable the first tab
@@ -18,48 +38,17 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
         jTabbedPane2.setEnabledAt(4, false);  // Disable the first tab
         jTabbedPane2.setEnabledAt(5, false);
         
+
         
-        Account.setContentAreaFilled(false);  // Makes the button background transparent
-        Account.setOpaque(false);             // Ensures the transparency is respected
-        Account.setBorderPainted(false);
-        
-        HomePanel.setBackground(new Color(255, 255, 255,0));
-        VehiclePanel.setBackground(new Color(255, 255, 255,100));
-        FeedbackPanel.setBackground(new Color(255, 255, 255,100));
-        BookmarkPanel.setBackground(new Color(255, 255, 255,100));
-        PaymentPanel.setBackground(new Color(255, 255, 255,100));
-        NotificationPanel.setBackground(new Color(255, 255, 255,100));
+        HomePanel.setBackground(new Color(211, 211, 211,100));
+        VehiclePanel.setBackground(new Color(211, 211, 211,100));
+        FeedbackPanel.setBackground(new Color(211, 211, 211,100));
+        BookmarkPanel.setBackground(new Color(211, 211, 211,100));
+        PaymentPanel.setBackground(new Color(211, 211, 211,100));
+        NotificationPanel.setBackground(new Color(211, 211, 211,100));
         
         
-        Home_Button.setOpaque(false);                // Ensures the button background is visible
-        Home_Button.setBackground(Color.GRAY);      // Sets the background color to gray
-        Home_Button.setBorderPainted(false);        // Removes the button's border
-        Home_Button.setContentAreaFilled(true);
         
-        Vehicle_Button.setOpaque(false);                // Ensures the button background is visible
-        Vehicle_Button.setBackground(Color.GRAY);      // Sets the background color to gray
-        Vehicle_Button.setBorderPainted(false);        // Removes the button's border
-        Vehicle_Button.setContentAreaFilled(true);
-        
-        Feedback_Button.setOpaque(false);                // Ensures the button background is visible
-        Feedback_Button.setBackground(Color.GRAY);      // Sets the background color to gray
-        Feedback_Button.setBorderPainted(false);        // Removes the button's border
-        Feedback_Button.setContentAreaFilled(true);
-        
-        Bookmark_Button.setOpaque(false);                // Ensures the button background is visible
-        Bookmark_Button.setBackground(Color.GRAY);      // Sets the background color to gray
-        Bookmark_Button.setBorderPainted(false);        // Removes the button's border
-        Bookmark_Button.setContentAreaFilled(true);
-        
-        Payment_Button.setOpaque(false);                // Ensures the button background is visible
-        Payment_Button.setBackground(Color.GRAY);      // Sets the background color to gray
-        Payment_Button.setBorderPainted(false);        // Removes the button's border
-        Payment_Button.setContentAreaFilled(true);
-        
-        Notification_Button.setOpaque(false);                // Ensures the button background is visible
-        Notification_Button.setBackground(Color.GRAY);      // Sets the background color to gray
-        Notification_Button.setBorderPainted(false);        // Removes the button's border
-        Notification_Button.setContentAreaFilled(true);
         
     }
 
@@ -75,28 +64,45 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        Account = new javax.swing.JButton();
+        Account_Name = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        Vehicle_Button = new javax.swing.JButton();
-        Feedback_Button = new javax.swing.JButton();
-        Payment_Button = new javax.swing.JButton();
-        Home_Button = new javax.swing.JButton();
-        Bookmark_Button = new javax.swing.JButton();
-        Notification_Button = new javax.swing.JButton();
-        Notification_Button1 = new javax.swing.JButton();
+        Home_button = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        Vehicle_button = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        Feedback_button = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        Bookmark_button = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        Payment_button = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        Notification_button = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        Exit_button = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         HomePanel = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         VehiclePanel = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel5 = new javax.swing.JPanel();
+        jToggleButton18 = new javax.swing.JToggleButton();
+        jToggleButton19 = new javax.swing.JToggleButton();
+        jToggleButton20 = new javax.swing.JToggleButton();
         FeedbackPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         BookmarkPanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        PaymentPanel = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
         NotificationPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        PaymentPanel = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -114,174 +120,373 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Account_Icon.png"))); // NOI18N
         jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1840, 0, -1, 96));
 
-        Account.setBackground(new java.awt.Color(0, 0, 0));
-        Account.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        Account.setForeground(new java.awt.Color(255, 255, 255));
-        Account.setText("ACCOUNT NAME");
-        jPanel4.add(Account, new org.netbeans.lib.awtextra.AbsoluteConstraints(1690, 40, -1, -1));
+        Account_Name.setBackground(new java.awt.Color(255, 255, 255));
+        Account_Name.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 14)); // NOI18N
+        Account_Name.setForeground(new java.awt.Color(255, 255, 255));
+        Account_Name.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        Account_Name.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                Account_NameComponentShown(evt);
+            }
+        });
+        jPanel4.add(Account_Name, new org.netbeans.lib.awtextra.AbsoluteConstraints(1710, 30, 120, 40));
 
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1930, 100));
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 1930, 100));
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.white, java.awt.Color.black, java.awt.Color.white));
 
-        Vehicle_Button.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        Vehicle_Button.setForeground(new java.awt.Color(255, 255, 255));
-        Vehicle_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vehicle_Icon.png"))); // NOI18N
-        Vehicle_Button.setToolTipText("Vehicle List");
-        Vehicle_Button.setBorder(null);
-        Vehicle_Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Vehicle_ButtonActionPerformed(evt);
+        Home_button.setBackground(new java.awt.Color(153, 153, 153));
+        Home_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Home_buttonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Home_buttonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Home_buttonMouseExited(evt);
             }
         });
 
-        Feedback_Button.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        Feedback_Button.setForeground(new java.awt.Color(255, 255, 255));
-        Feedback_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Feedback_Icon.png"))); // NOI18N
-        Feedback_Button.setToolTipText("Feedbacks");
-        Feedback_Button.setBorder(null);
-        Feedback_Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Feedback_ButtonActionPerformed(evt);
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Home_Icon.png"))); // NOI18N
+
+        jLabel15.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Home");
+
+        javax.swing.GroupLayout Home_buttonLayout = new javax.swing.GroupLayout(Home_button);
+        Home_button.setLayout(Home_buttonLayout);
+        Home_buttonLayout.setHorizontalGroup(
+            Home_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Home_buttonLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel15)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        Home_buttonLayout.setVerticalGroup(
+            Home_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Home_buttonLayout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addGroup(Home_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel9))
+                .addGap(25, 25, 25))
+        );
+
+        Vehicle_button.setBackground(new java.awt.Color(153, 153, 153));
+        Vehicle_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Vehicle_buttonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Vehicle_buttonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Vehicle_buttonMouseExited(evt);
             }
         });
 
-        Payment_Button.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        Payment_Button.setForeground(new java.awt.Color(255, 255, 255));
-        Payment_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Payment_Icon.png"))); // NOI18N
-        Payment_Button.setToolTipText("Payments");
-        Payment_Button.setBorder(null);
-        Payment_Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Payment_ButtonActionPerformed(evt);
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vehicle_Icon.png"))); // NOI18N
+
+        jLabel16.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Vehicles");
+
+        javax.swing.GroupLayout Vehicle_buttonLayout = new javax.swing.GroupLayout(Vehicle_button);
+        Vehicle_button.setLayout(Vehicle_buttonLayout);
+        Vehicle_buttonLayout.setHorizontalGroup(
+            Vehicle_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Vehicle_buttonLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel16)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        Vehicle_buttonLayout.setVerticalGroup(
+            Vehicle_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Vehicle_buttonLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(Vehicle_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel10))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        Feedback_button.setBackground(new java.awt.Color(153, 153, 153));
+        Feedback_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Feedback_buttonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Feedback_buttonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Feedback_buttonMouseExited(evt);
             }
         });
 
-        Home_Button.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        Home_Button.setForeground(new java.awt.Color(255, 255, 255));
-        Home_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Home_Icon.png"))); // NOI18N
-        Home_Button.setToolTipText("Home Page");
-        Home_Button.setBorder(null);
-        Home_Button.setFocusable(false);
-        Home_Button.setIconTextGap(10);
-        Home_Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Home_ButtonActionPerformed(evt);
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Feedback_Icon.png"))); // NOI18N
+
+        jLabel18.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Feedback");
+
+        javax.swing.GroupLayout Feedback_buttonLayout = new javax.swing.GroupLayout(Feedback_button);
+        Feedback_button.setLayout(Feedback_buttonLayout);
+        Feedback_buttonLayout.setHorizontalGroup(
+            Feedback_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Feedback_buttonLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel18)
+                .addGap(35, 35, 35))
+        );
+        Feedback_buttonLayout.setVerticalGroup(
+            Feedback_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Feedback_buttonLayout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addGroup(Feedback_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel11))
+                .addGap(25, 25, 25))
+        );
+
+        Bookmark_button.setBackground(new java.awt.Color(153, 153, 153));
+        Bookmark_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Bookmark_buttonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Bookmark_buttonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Bookmark_buttonMouseExited(evt);
             }
         });
 
-        Bookmark_Button.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        Bookmark_Button.setForeground(new java.awt.Color(255, 255, 255));
-        Bookmark_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Bookmark_Icon.png"))); // NOI18N
-        Bookmark_Button.setToolTipText("Favorites");
-        Bookmark_Button.setBorder(null);
-        Bookmark_Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Bookmark_ButtonActionPerformed(evt);
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Bookmark_Icon.png"))); // NOI18N
+
+        jLabel17.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Bookmark");
+
+        javax.swing.GroupLayout Bookmark_buttonLayout = new javax.swing.GroupLayout(Bookmark_button);
+        Bookmark_button.setLayout(Bookmark_buttonLayout);
+        Bookmark_buttonLayout.setHorizontalGroup(
+            Bookmark_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Bookmark_buttonLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel17)
+                .addGap(29, 29, 29))
+        );
+        Bookmark_buttonLayout.setVerticalGroup(
+            Bookmark_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Bookmark_buttonLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(Bookmark_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel13))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+
+        Payment_button.setBackground(new java.awt.Color(153, 153, 153));
+        Payment_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Payment_buttonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Payment_buttonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Payment_buttonMouseExited(evt);
             }
         });
 
-        Notification_Button.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        Notification_Button.setForeground(new java.awt.Color(255, 255, 255));
-        Notification_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Notification_Icon.png"))); // NOI18N
-        Notification_Button.setToolTipText("Notification");
-        Notification_Button.setBorder(null);
-        Notification_Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Notification_ButtonActionPerformed(evt);
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Payment_Icon.png"))); // NOI18N
+
+        jLabel19.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Payment");
+
+        javax.swing.GroupLayout Payment_buttonLayout = new javax.swing.GroupLayout(Payment_button);
+        Payment_button.setLayout(Payment_buttonLayout);
+        Payment_buttonLayout.setHorizontalGroup(
+            Payment_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Payment_buttonLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel19)
+                .addGap(40, 40, 40))
+        );
+        Payment_buttonLayout.setVerticalGroup(
+            Payment_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Payment_buttonLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(Payment_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel19)
+                    .addComponent(jLabel14))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+
+        Notification_button.setBackground(new java.awt.Color(153, 153, 153));
+        Notification_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Notification_buttonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Notification_buttonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Notification_buttonMouseExited(evt);
             }
         });
 
-        Notification_Button1.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 14)); // NOI18N
-        Notification_Button1.setForeground(new java.awt.Color(255, 255, 255));
-        Notification_Button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exit_Icon.png"))); // NOI18N
-        Notification_Button1.setToolTipText("Notification");
-        Notification_Button1.setBorder(null);
-        Notification_Button1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Notification_Button1ActionPerformed(evt);
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Notification_Icon.png"))); // NOI18N
+
+        jLabel22.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Notification");
+
+        javax.swing.GroupLayout Notification_buttonLayout = new javax.swing.GroupLayout(Notification_button);
+        Notification_button.setLayout(Notification_buttonLayout);
+        Notification_buttonLayout.setHorizontalGroup(
+            Notification_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Notification_buttonLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel22)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        Notification_buttonLayout.setVerticalGroup(
+            Notification_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Notification_buttonLayout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(Notification_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel22)
+                    .addComponent(jLabel12))
+                .addGap(28, 28, 28))
+        );
+
+        Exit_button.setBackground(new java.awt.Color(153, 153, 153));
+        Exit_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Exit_buttonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Exit_buttonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Exit_buttonMouseExited(evt);
             }
         });
+
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exit_Icon.png"))); // NOI18N
+
+        jLabel20.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("Log out");
+
+        javax.swing.GroupLayout Exit_buttonLayout = new javax.swing.GroupLayout(Exit_button);
+        Exit_button.setLayout(Exit_buttonLayout);
+        Exit_buttonLayout.setHorizontalGroup(
+            Exit_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Exit_buttonLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel20)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        Exit_buttonLayout.setVerticalGroup(
+            Exit_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Exit_buttonLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(Exit_buttonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel21))
+                .addGap(15, 15, 15))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Home_Button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                    .addComponent(Vehicle_Button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Feedback_Button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Bookmark_Button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Payment_Button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Notification_Button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Notification_Button1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(Vehicle_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Feedback_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Bookmark_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Payment_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Notification_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Exit_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Home_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(101, 101, 101)
-                .addComponent(Home_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(Home_button, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Vehicle_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Vehicle_button, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Feedback_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Feedback_button, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Bookmark_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Bookmark_button, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Payment_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Payment_button, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Notification_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 554, Short.MAX_VALUE)
-                .addComponent(Notification_Button1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(204, 204, 204))
+                .addComponent(Notification_button, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 371, Short.MAX_VALUE)
+                .addComponent(Exit_button, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 1280));
-
-        jLabel3.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 48)); // NOI18N
-        jLabel3.setText("HOME PAGE");
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 190, 1020));
 
         javax.swing.GroupLayout HomePanelLayout = new javax.swing.GroupLayout(HomePanel);
         HomePanel.setLayout(HomePanelLayout);
         HomePanelLayout.setHorizontalGroup(
             HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(HomePanelLayout.createSequentialGroup()
-                .addGap(490, 490, 490)
-                .addComponent(jLabel3)
-                .addContainerGap(968, Short.MAX_VALUE))
+            .addGap(0, 1730, Short.MAX_VALUE)
         );
         HomePanelLayout.setVerticalGroup(
             HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(HomePanelLayout.createSequentialGroup()
-                .addGap(430, 430, 430)
-                .addComponent(jLabel3)
-                .addContainerGap(535, Short.MAX_VALUE))
+            .addGap(0, 985, Short.MAX_VALUE)
         );
 
         jTabbedPane2.addTab("tab1", HomePanel);
 
-        jLabel8.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 48)); // NOI18N
-        jLabel8.setText("VEHICLE PAGE");
+        jPanel5.setLayout(new java.awt.GridLayout(3, 0));
+
+        jToggleButton18.setText("jToggleButton18");
+        jPanel5.add(jToggleButton18);
+
+        jToggleButton19.setText("jToggleButton19");
+        jPanel5.add(jToggleButton19);
+
+        jToggleButton20.setText("jToggleButton20");
+        jPanel5.add(jToggleButton20);
+
+        jScrollPane2.setViewportView(jPanel5);
 
         javax.swing.GroupLayout VehiclePanelLayout = new javax.swing.GroupLayout(VehiclePanel);
         VehiclePanel.setLayout(VehiclePanelLayout);
         VehiclePanelLayout.setHorizontalGroup(
             VehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(VehiclePanelLayout.createSequentialGroup()
-                .addGap(490, 490, 490)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(885, Short.MAX_VALUE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1730, Short.MAX_VALUE)
         );
         VehiclePanelLayout.setVerticalGroup(
             VehiclePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(VehiclePanelLayout.createSequentialGroup()
-                .addGap(430, 430, 430)
-                .addComponent(jLabel8)
-                .addContainerGap(535, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VehiclePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 979, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("tab2", VehiclePanel);
@@ -296,14 +501,14 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
             .addGroup(FeedbackPanelLayout.createSequentialGroup()
                 .addGap(490, 490, 490)
                 .addComponent(jLabel5)
-                .addContainerGap(848, Short.MAX_VALUE))
+                .addContainerGap(818, Short.MAX_VALUE))
         );
         FeedbackPanelLayout.setVerticalGroup(
             FeedbackPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FeedbackPanelLayout.createSequentialGroup()
                 .addGap(430, 430, 430)
                 .addComponent(jLabel5)
-                .addContainerGap(535, Short.MAX_VALUE))
+                .addContainerGap(495, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("tab3", FeedbackPanel);
@@ -318,39 +523,17 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
             .addGroup(BookmarkPanelLayout.createSequentialGroup()
                 .addGap(490, 490, 490)
                 .addComponent(jLabel6)
-                .addContainerGap(825, Short.MAX_VALUE))
+                .addContainerGap(795, Short.MAX_VALUE))
         );
         BookmarkPanelLayout.setVerticalGroup(
             BookmarkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BookmarkPanelLayout.createSequentialGroup()
                 .addGap(430, 430, 430)
                 .addComponent(jLabel6)
-                .addContainerGap(535, Short.MAX_VALUE))
+                .addContainerGap(495, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("tab4", BookmarkPanel);
-
-        jLabel7.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 48)); // NOI18N
-        jLabel7.setText("PAYMENT PAGE");
-
-        javax.swing.GroupLayout PaymentPanelLayout = new javax.swing.GroupLayout(PaymentPanel);
-        PaymentPanel.setLayout(PaymentPanelLayout);
-        PaymentPanelLayout.setHorizontalGroup(
-            PaymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaymentPanelLayout.createSequentialGroup()
-                .addGap(490, 490, 490)
-                .addComponent(jLabel7)
-                .addContainerGap(879, Short.MAX_VALUE))
-        );
-        PaymentPanelLayout.setVerticalGroup(
-            PaymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaymentPanelLayout.createSequentialGroup()
-                .addGap(430, 430, 430)
-                .addComponent(jLabel7)
-                .addContainerGap(535, Short.MAX_VALUE))
-        );
-
-        jTabbedPane2.addTab("tab5", PaymentPanel);
 
         jLabel4.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 48)); // NOI18N
         jLabel4.setText("NOTIFICATION PAGE");
@@ -362,57 +545,55 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
             .addGroup(NotificationPanelLayout.createSequentialGroup()
                 .addGap(490, 490, 490)
                 .addComponent(jLabel4)
-                .addContainerGap(734, Short.MAX_VALUE))
+                .addContainerGap(704, Short.MAX_VALUE))
         );
         NotificationPanelLayout.setVerticalGroup(
             NotificationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(NotificationPanelLayout.createSequentialGroup()
                 .addGap(430, 430, 430)
                 .addComponent(jLabel4)
-                .addContainerGap(535, Short.MAX_VALUE))
+                .addContainerGap(495, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("tab6", NotificationPanel);
 
-        jPanel2.add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 1760, 1060));
+        jLabel7.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 48)); // NOI18N
+        jLabel7.setText("PAYMENT PAGE");
+
+        javax.swing.GroupLayout PaymentPanelLayout = new javax.swing.GroupLayout(PaymentPanel);
+        PaymentPanel.setLayout(PaymentPanelLayout);
+        PaymentPanelLayout.setHorizontalGroup(
+            PaymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaymentPanelLayout.createSequentialGroup()
+                .addGap(490, 490, 490)
+                .addComponent(jLabel7)
+                .addContainerGap(849, Short.MAX_VALUE))
+        );
+        PaymentPanelLayout.setVerticalGroup(
+            PaymentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaymentPanelLayout.createSequentialGroup()
+                .addGap(430, 430, 430)
+                .addComponent(jLabel7)
+                .addContainerGap(495, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("tab5", PaymentPanel);
+
+        jPanel2.add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, 1730, 1020));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Main_Menu_BG.png"))); // NOI18N
         jLabel2.setText("jLabel2");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -190, 1920, 1270));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1920, 1040));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1280));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+                
+    private void Home_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Home_buttonMouseClicked
         
-    private void Vehicle_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Vehicle_ButtonActionPerformed
-        if (jTabbedPane2.getSelectedIndex() == 1) {
-    // Tab is already selected, so hide it or disable it
-            jTabbedPane2.setEnabledAt(1, false);  // Disable the tab so it won't be clickable
-            jTabbedPane2.setSelectedIndex(-1);  // Deselect the tab (hide the content)
-        }
-        else {
-    // Tab is not selected, so select it
-            jTabbedPane2.setEnabledAt(1, true);  // Ensure the tab is enabled
-            jTabbedPane2.setSelectedIndex(1);  // Select the tab
-        }      
-    }//GEN-LAST:event_Vehicle_ButtonActionPerformed
-
-    private void Feedback_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Feedback_ButtonActionPerformed
-        if (jTabbedPane2.getSelectedIndex() == 2) {
-    // Tab is already selected, so hide it or disable it
-            jTabbedPane2.setEnabledAt(2, false);  // Disable the tab so it won't be clickable
-            jTabbedPane2.setSelectedIndex(-1);  // Deselect the tab (hide the content)
-        }
-        else {
-    // Tab is not selected, so select it
-            jTabbedPane2.setEnabledAt(2, true);  // Ensure the tab is enabled
-            jTabbedPane2.setSelectedIndex(2);  // Select the tab
-        } 
-    }//GEN-LAST:event_Feedback_ButtonActionPerformed
-
-    private void Home_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Home_ButtonActionPerformed
+         Home_button.setBackground(Color.GRAY);
         
         if (jTabbedPane2.getSelectedIndex() == 0) {
     // Tab is already selected, so hide it or disable it
@@ -424,22 +605,78 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
             jTabbedPane2.setEnabledAt(0, true);  // Ensure the tab is enabled
             jTabbedPane2.setSelectedIndex(0);  // Select the tab
         }
-    }//GEN-LAST:event_Home_ButtonActionPerformed
+        
+    }//GEN-LAST:event_Home_buttonMouseClicked
 
-    private void Payment_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Payment_ButtonActionPerformed
-        if (jTabbedPane2.getSelectedIndex() == 4) {
+    private void Home_buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Home_buttonMouseEntered
+       Home_button.setBackground(new Color(211, 211, 211));
+    }//GEN-LAST:event_Home_buttonMouseEntered
+
+    private void Home_buttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Home_buttonMouseExited
+        Home_button.setBackground(new Color(153, 153, 153));
+    }//GEN-LAST:event_Home_buttonMouseExited
+
+    
+    
+    
+    
+    private void Vehicle_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Vehicle_buttonMouseClicked
+        Vehicle_button.setBackground(Color.GRAY);
+        
+        if (jTabbedPane2.getSelectedIndex() == 1) {
     // Tab is already selected, so hide it or disable it
-            jTabbedPane2.setEnabledAt(4, false);  // Disable the tab so it won't be clickable
+            jTabbedPane2.setEnabledAt(1, false);  // Disable the tab so it won't be clickable
             jTabbedPane2.setSelectedIndex(-1);  // Deselect the tab (hide the content)
         }
         else {
     // Tab is not selected, so select it
-            jTabbedPane2.setEnabledAt(4, true);  // Ensure the tab is enabled
-            jTabbedPane2.setSelectedIndex(4);  // Select the tab
+            jTabbedPane2.setEnabledAt(1, true);  // Ensure the tab is enabled
+            jTabbedPane2.setSelectedIndex(1);  // Select the tab
         }
-    }//GEN-LAST:event_Payment_ButtonActionPerformed
+        
+        
+    }//GEN-LAST:event_Vehicle_buttonMouseClicked
 
-    private void Bookmark_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bookmark_ButtonActionPerformed
+    private void Vehicle_buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Vehicle_buttonMouseEntered
+        Vehicle_button.setBackground(new Color(211, 211, 211));
+    }//GEN-LAST:event_Vehicle_buttonMouseEntered
+
+    private void Vehicle_buttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Vehicle_buttonMouseExited
+        Vehicle_button.setBackground(new Color(153, 153, 153));
+    }//GEN-LAST:event_Vehicle_buttonMouseExited
+
+    
+    
+    
+    private void Feedback_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Feedback_buttonMouseClicked
+        Feedback_button.setBackground(Color.GRAY);
+        
+        if (jTabbedPane2.getSelectedIndex() == 2) {
+    // Tab is already selected, so hide it or disable it
+            jTabbedPane2.setEnabledAt(2, false);  // Disable the tab so it won't be clickable
+            jTabbedPane2.setSelectedIndex(-1);  // Deselect the tab (hide the content)
+        }
+        else {
+    // Tab is not selected, so select it
+            jTabbedPane2.setEnabledAt(2, true);  // Ensure the tab is enabled
+            jTabbedPane2.setSelectedIndex(2);  // Select the tab
+        }
+    }//GEN-LAST:event_Feedback_buttonMouseClicked
+
+    private void Feedback_buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Feedback_buttonMouseEntered
+        Feedback_button.setBackground(new Color(211, 211, 211));
+    }//GEN-LAST:event_Feedback_buttonMouseEntered
+
+    private void Feedback_buttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Feedback_buttonMouseExited
+        Feedback_button.setBackground(new Color(153, 153, 153));
+    }//GEN-LAST:event_Feedback_buttonMouseExited
+
+    
+    
+    
+    private void Bookmark_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Bookmark_buttonMouseClicked
+        Bookmark_button.setBackground(Color.GRAY);
+        
         if (jTabbedPane2.getSelectedIndex() == 3) {
     // Tab is already selected, so hide it or disable it
             jTabbedPane2.setEnabledAt(3, false);  // Disable the tab so it won't be clickable
@@ -450,9 +687,48 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
             jTabbedPane2.setEnabledAt(3, true);  // Ensure the tab is enabled
             jTabbedPane2.setSelectedIndex(3);  // Select the tab
         }
-    }//GEN-LAST:event_Bookmark_ButtonActionPerformed
+    }//GEN-LAST:event_Bookmark_buttonMouseClicked
 
-    private void Notification_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Notification_ButtonActionPerformed
+    private void Bookmark_buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Bookmark_buttonMouseEntered
+        Bookmark_button.setBackground(new Color(211, 211, 211));
+    }//GEN-LAST:event_Bookmark_buttonMouseEntered
+
+    private void Bookmark_buttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Bookmark_buttonMouseExited
+        Bookmark_button.setBackground(new Color(153, 153, 153));
+    }//GEN-LAST:event_Bookmark_buttonMouseExited
+
+    
+    
+    
+    private void Payment_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Payment_buttonMouseClicked
+        Payment_button.setBackground(Color.GRAY);
+        
+        if (jTabbedPane2.getSelectedIndex() == 4) {
+    // Tab is already selected, so hide it or disable it
+            jTabbedPane2.setEnabledAt(4, false);  // Disable the tab so it won't be clickable
+            jTabbedPane2.setSelectedIndex(-1);  // Deselect the tab (hide the content)
+        }
+        else {
+    // Tab is not selected, so select it
+            jTabbedPane2.setEnabledAt(4, true);  // Ensure the tab is enabled
+            jTabbedPane2.setSelectedIndex(4);  // Select the tab
+        }
+    }//GEN-LAST:event_Payment_buttonMouseClicked
+
+    private void Payment_buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Payment_buttonMouseEntered
+        Payment_button.setBackground(new Color(211, 211, 211));
+    }//GEN-LAST:event_Payment_buttonMouseEntered
+
+    private void Payment_buttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Payment_buttonMouseExited
+        Payment_button.setBackground(new Color(153, 153, 153));
+    }//GEN-LAST:event_Payment_buttonMouseExited
+
+    
+    
+    
+    private void Notification_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Notification_buttonMouseClicked
+        Notification_button.setBackground(Color.GRAY);
+        
         if (jTabbedPane2.getSelectedIndex() == 5) {
     // Tab is already selected, so hide it or disable it
             jTabbedPane2.setEnabledAt(5, false);  // Disable the tab so it won't be clickable
@@ -463,11 +739,39 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
             jTabbedPane2.setEnabledAt(5, true);  // Ensure the tab is enabled
             jTabbedPane2.setSelectedIndex(5);  // Select the tab
         }
-    }//GEN-LAST:event_Notification_ButtonActionPerformed
+    }//GEN-LAST:event_Notification_buttonMouseClicked
+
+    private void Notification_buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Notification_buttonMouseEntered
         
-    private void Notification_Button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Notification_Button1ActionPerformed
+        Notification_button.setBackground(new Color(211, 211, 211));
+    }//GEN-LAST:event_Notification_buttonMouseEntered
+
+    private void Notification_buttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Notification_buttonMouseExited
+        Notification_button.setBackground(new Color(153, 153, 153));
+    }//GEN-LAST:event_Notification_buttonMouseExited
+
+    
+    
+    private void Exit_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Exit_buttonMouseClicked
+        Exit_button.setBackground(Color.LIGHT_GRAY);
+        System.exit(0);
+    }//GEN-LAST:event_Exit_buttonMouseClicked
+
+    private void Exit_buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Exit_buttonMouseEntered
+        Exit_button.setBackground(new Color(211, 211, 211));
+    }//GEN-LAST:event_Exit_buttonMouseEntered
+
+    private void Exit_buttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Exit_buttonMouseExited
+        Exit_button.setBackground(new Color(153, 153, 153)); 
+    }//GEN-LAST:event_Exit_buttonMouseExited
+
+    
+    
+
+   
+    private void Account_NameComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_Account_NameComponentShown
         
-    }//GEN-LAST:event_Notification_Button1ActionPerformed
+    }//GEN-LAST:event_Account_NameComponentShown
 
     /**
      * @param args the command line arguments
@@ -505,31 +809,48 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Account;
+    public javax.swing.JLabel Account_Name;
     private javax.swing.JPanel BookmarkPanel;
-    private javax.swing.JButton Bookmark_Button;
+    private javax.swing.JPanel Bookmark_button;
+    private javax.swing.JPanel Exit_button;
     private javax.swing.JPanel FeedbackPanel;
-    private javax.swing.JButton Feedback_Button;
+    private javax.swing.JPanel Feedback_button;
     private javax.swing.JPanel HomePanel;
-    private javax.swing.JButton Home_Button;
+    private javax.swing.JPanel Home_button;
     private javax.swing.JPanel NotificationPanel;
-    private javax.swing.JButton Notification_Button;
-    private javax.swing.JButton Notification_Button1;
+    private javax.swing.JPanel Notification_button;
     private javax.swing.JPanel PaymentPanel;
-    private javax.swing.JButton Payment_Button;
+    private javax.swing.JPanel Payment_button;
     private javax.swing.JPanel VehiclePanel;
-    private javax.swing.JButton Vehicle_Button;
+    private javax.swing.JPanel Vehicle_button;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JToggleButton jToggleButton18;
+    private javax.swing.JToggleButton jToggleButton19;
+    private javax.swing.JToggleButton jToggleButton20;
     // End of variables declaration//GEN-END:variables
 }

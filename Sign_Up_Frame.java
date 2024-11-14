@@ -11,16 +11,6 @@ public class Sign_Up_Frame extends javax.swing.JFrame {
     public Sign_Up_Frame() {
         initComponents();
         
-        String url = "jdbc:mysql://localhost:3306/gulong_rentals";
-        String username = "root"; // Default XAMPP MySQL username
-        String password = ""; // Default password is empty
-
-        try {
-            Connection connection = DriverManager.getConnection(url, username, password);
-            System.out.println("Connected to MySQL database!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
        
         Return_Login_Button.setContentAreaFilled(false);  // Makes the button background transparent
         Return_Login_Button.setOpaque(false);             // Ensures the transparency is respected
