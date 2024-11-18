@@ -25,7 +25,7 @@ public class Login_Frame extends javax.swing.JFrame {
         
         
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -198,34 +198,110 @@ public class Login_Frame extends javax.swing.JFrame {
         
         dispose();
     }//GEN-LAST:event_Sign_upActionPerformed
+    
+    private int getUserIdByUsername(String username) {
+        int userId = -1;
+        String query = "SELECT user_id FROM users WHERE username = ?";
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gulong_rentals", "username", "password");
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
+            stmt.setString(1, username);  // Set the username parameter
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    userId = rs.getInt("user_id");  // Get the user_id from the result set
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userId;
+    }
+    
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         String username = UsernameText.getText();
-        String password = new String(PasswordText.getPassword());
-        String email = UsernameText.getText();
+    String password = new String(PasswordText.getPassword());
+    String email = UsernameText.getText();
 
-       
-        
     // Validate input
-        if (username.equals("") || password.equals("")) {
-            JOptionPane.showMessageDialog(null, "Please fill out both username and password");
-            return;  // Exit if username or password is empty
-        }
+    if (username.equals("") || password.equals("")) {
+        JOptionPane.showMessageDialog(null, "Please fill out both username and password");
+        return;  // Exit if username or password is empty
+    }
 
-        // Attempt to log the user in
-        if (authenticateUser(username, password) || authenticateUser(email, password)) {
-            JOptionPane.showMessageDialog(null, "Login successful!");
-            
-        // Proceed to the next screen or main menu
-            dispose();  // Close the login window
-            
-            new Main_Menu_Frame().setVisible(true);  // Open main menu or dashboard
-             Main_Menu_Frame.instance.A_N.setText(UsernameText.getText());  
-        }   
-        else {
-            JOptionPane.showMessageDialog(null, "Invalid username or password.");
+    // Attempt to log the user in
+    int userId = -1;  // Declare userId variable to store the logged-in user^'s ID
+
+    // Debugging log
+    System.out.println("Authenticating user...");
+
+    if (authenticateUser(username, password)) {
+        userId = getUserIdByUsername(username);  // Retrieve user_id based on the username
+    } else if (authenticateUser(email, password)) {
+        userId = getUserIdByEmail(email);
+    }
+
+    if (userId != -1) {
+    JOptionPane.showMessageDialog(null, "Login successful!");
+
+    // Create the main menu instance with userId passed to its constructor
+    Main_Menu_Frame mainMenu = new Main_Menu_Frame(userId);
+
+    // Proceed to the main menu
+    dispose();  // Close the login window
+    mainMenu.setVisible(true);  // Show the main menu
+    mainMenu.A_N.setText(username);
+} else {
+    JOptionPane.showMessageDialog(null, "Invalid username or password.");
+}
+    }
+    
+    
+    
+    public static class DatabaseManager {
+
+        public int getUserIdByUsername(String username) {
+            int userId = -1;
+            String query = "SELECT user_id FROM users WHERE username = ?";
+            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gulong_rentals", "username", "password");
+                 PreparedStatement stmt = conn.prepareStatement(query)) {
+
+                stmt.setString(1, username);  // Set the username parameter
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        userId = rs.getInt("user_id");  // Get the user_id from the result set
+                    }
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return userId;
         }
     }
+
+// Method to retrieve the user_id based on the email
+    private int getUserIdByEmail(String email) {
+    int userId = -1;
+    String query = "SELECT user_id FROM users WHERE email = ?";  // Assuming 'users' table has 'user_id' and 'email'
+
+    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gulong_rentals", "username", "password");
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+
+        stmt.setString(1, email);  // Set the email parameter
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                userId = rs.getInt("user_id");  // Retrieve the user_id
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return userId;
+}
 
 // Method to authenticate user by checking credentials in the database
     private boolean authenticateUser(String username, String password) {
