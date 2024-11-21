@@ -7,13 +7,12 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class Login_Frame extends javax.swing.JFrame {
+    
+    public static int loggedInUserId;
 
-    /**
-     * Creates new form Login_Frame
-     */
     public Login_Frame() {
         initComponents();
-    
+        
         
         Close_button.setContentAreaFilled(false);  // Makes the button background transparent
         Close_button.setOpaque(false);             // Ensures the transparency is respected
@@ -220,7 +219,7 @@ public class Login_Frame extends javax.swing.JFrame {
     }
     
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-        String username = UsernameText.getText();
+    String username = UsernameText.getText();
     String password = new String(PasswordText.getPassword());
     String email = UsernameText.getText();
 
@@ -236,15 +235,15 @@ public class Login_Frame extends javax.swing.JFrame {
     // Debugging log
     System.out.println("Authenticating user...");
 
-    if (authenticateUser(username, password)) {
+    if (authenticateUser(username, email, password)) {
         userId = getUserIdByUsername(username);  // Retrieve user_id based on the username
-    } else if (authenticateUser(email, password)) {
+    } else if (authenticateUser(email, email, password)) {
         userId = getUserIdByEmail(email);
     }
 
     if (userId != -1) {
     JOptionPane.showMessageDialog(null, "Login successful!");
-
+    Login_Frame.loggedInUserId = userId;
     // Create the main menu instance with userId passed to its constructor
     Main_Menu_Frame mainMenu = new Main_Menu_Frame(userId);
 
@@ -252,6 +251,7 @@ public class Login_Frame extends javax.swing.JFrame {
     dispose();  // Close the login window
     mainMenu.setVisible(true);  // Show the main menu
     mainMenu.A_N.setText(username);
+    
 } else {
     JOptionPane.showMessageDialog(null, "Invalid username or password.");
 }
@@ -304,7 +304,7 @@ public class Login_Frame extends javax.swing.JFrame {
 }
 
 // Method to authenticate user by checking credentials in the database
-    private boolean authenticateUser(String username, String password) {
+    private boolean authenticateUser(String username, String email, String password) {
         String url = "jdbc:mysql://localhost:3306/gulong_rentals";
         String dbUsername = "root"; 
         String dbPassword = "";
@@ -317,7 +317,7 @@ public class Login_Frame extends javax.swing.JFrame {
 
 
             stmt.setString(1, username);
-            stmt.setString(2, username);
+            stmt.setString(2, email);
             stmt.setString(3, password);  
 
         

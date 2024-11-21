@@ -138,7 +138,7 @@ public class Admin_Panel extends javax.swing.JFrame {
             // Process the ResultSet and add rows to the JTable
             while (rs.next()) {
                 Object[] row = new Object[4]; // Assuming 4 columns (id, username, email, password)
-                row[0] = rs.getInt("id");
+                row[0] = rs.getInt("user_id");
                 row[1] = rs.getString("username");
                 row[2] = rs.getString("email");
                 row[3] = rs.getString("password");

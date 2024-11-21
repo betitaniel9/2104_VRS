@@ -11,11 +11,11 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
     public static Main_Menu_Frame instance;
     public JLabel A_N; 
     private int loggedInUserId;
- 
+    int userId = Login_Frame.loggedInUserId;
     public Main_Menu_Frame(int userId) {
         System.out.println("Main_Menu_Frame constructor called.");
         initComponents();
-        
+        this.userId = loggedInUserId;
         instance = this;
         A_N = Account_Name;
         
@@ -25,7 +25,7 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
 
         try {
             Connection connection = DriverManager.getConnection(url, username, password);
-            System.out.println("Connected to MySQL database! " + loggedInUserId);
+            System.out.println("Connected to MySQL database! " + userId);
             
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,7 +52,7 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
         
         
         this.loggedInUserId = userId;  // Store the userId in the frame
-        System.out.println("User ID in MainMenuFrame constructor: " + loggedInUserId); // Debugging log
+        System.out.println("User ID in MainMenuFrame constructor: " + userId); // Debugging log
         
     }
     
@@ -109,6 +109,7 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         FeedbackPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         BookmarkPanel = new javax.swing.JPanel();
@@ -510,24 +511,30 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
         jLabel26.setText("Vehicle Type");
 
+        jLabel6.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Price(Php)");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(94, 94, 94)
+                .addGap(50, 50, 50)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(97, 97, 97)
+                .addGap(86, 86, 86)
                 .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80)
+                .addGap(90, 90, 90)
                 .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78)
+                .addGap(101, 101, 101)
                 .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77)
+                .addGap(93, 93, 93)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(360, Short.MAX_VALUE))
+                .addGap(152, 152, 152))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -539,7 +546,8 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addContainerGap())
         );
 
@@ -658,7 +666,7 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
     
     
     public void fetchVehicleDetails(int userId) {
-    String query = "SELECT vehicle_id, vehicle_Logo, vehicle_pic, model, year, vehicle_Type, is_active FROM vehicle_list";
+    String query = "SELECT vehicle_id, vehicle_Logo, vehicle_pic, model, year, cost, vehicle_Type, is_active FROM vehicle_list";
     
     try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gulong_rentals", "username", "password");
          PreparedStatement stmt = conn.prepareStatement(query);
@@ -674,13 +682,17 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
             int vehicleId = rs.getInt("vehicle_id");
             String vehicleLogo = rs.getString("vehicle_Logo");
             String vehiclePic = rs.getString("vehicle_pic");
-            String model = rs.getString("model");
+            String model = rs.getString("model");            
+            double cost = rs.getDouble("cost");  // Fetch cost as a double
             int year = rs.getInt("year");
             String vehicleType = rs.getString("vehicle_Type");
             boolean isActive = rs.getBoolean("is_active");
-
+            boolean isBookmarked = true;
             // Create a new VehiclePanel and add it to the main panel
-            VehiclePanel vehiclePanel = new VehiclePanel(vehicleLogo, vehiclePic, model, year, vehicleType, isActive, userId, vehicleId);
+            VehiclePanel vehiclePanel = new VehiclePanel(vehicleLogo, vehiclePic, model, year, 
+                        vehicleType, isActive,userId, cost, 
+                        vehicleId,isBookmarked);
+
             mainPanel.add(vehiclePanel);
 
             // Add spacing between panels
@@ -760,7 +772,59 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
 
 
 
+// Add a method to fetch and display the list of bookmarked vehicles
+public void fetchBookmark() {
+    // Similar to fetchVehicleDetails, but only retrieve vehicles from the bookmark_list for the logged-in user
+    String query = "SELECT v.vehicle_id, v.vehicle_Logo, v.vehicle_pic, v.model, v.year, v.cost, v.vehicle_Type, v.is_active " +
+                   "FROM vehicle_list v " +
+                   "JOIN bookmark_list b ON v.vehicle_id = b.vehicle_id " +
+                   "WHERE b.user_id = ?";
 
+    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gulong_rentals", "username", "password");
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+
+        stmt.setInt(1, loggedInUserId);
+        ResultSet rs = stmt.executeQuery();
+
+        // Create a panel to display the bookmarked vehicles
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));  // Stack all vehicle panels vertically
+        mainPanel.setBackground(new Color(0, 105, 105, 255));  // Set background color for main panel
+
+        while (rs.next()) {
+            int vehicleId = rs.getInt("vehicle_id");
+            String vehicleLogo = rs.getString("vehicle_Logo");
+            String vehiclePic = rs.getString("vehicle_pic");
+            String make = rs.getString("make");
+            String model = rs.getString("model");
+            int year = rs.getInt("year");
+            double cost = rs.getDouble("cost");
+            String vehicleType = rs.getString("vehicle_Type");
+            boolean isActive = rs.getBoolean("is_active");
+
+            // Assuming the vehicle is bookmarked as it's being fetched from the bookmark list
+            boolean isBookmarked = true;
+
+            // Create a new VehiclePanel for each vehicle
+            VehiclePanel vehiclePanel = new VehiclePanel(vehicleLogo, vehiclePic, model, year, 
+                                                          vehicleType, isActive, loggedInUserId, cost, 
+                                                          vehicleId, isBookmarked);
+            mainPanel.add(vehiclePanel);  // Add the vehicle panel to the main panel
+
+            // Add some space between vehicles
+            mainPanel.add(Box.createVerticalStrut(20));
+        }
+
+        // Set the main panel as the viewport of the scroll pane
+        jScrollPane1.setViewportView(mainPanel);  // Pass the mainPanel here
+
+        jScrollPane1.revalidate();
+        jScrollPane1.repaint();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 
     
     private void Bookmark_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Bookmark_buttonMouseClicked
@@ -775,7 +839,7 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
     // Tab is not selected, so select it
             jTabbedPane2.setEnabledAt(3, true);  // Ensure the tab is enabled
             jTabbedPane2.setSelectedIndex(3);  // Select the tab
-            
+            fetchBookmark();
         }
     }//GEN-LAST:event_Bookmark_buttonMouseClicked
 
@@ -910,6 +974,7 @@ public class Main_Menu_Frame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
